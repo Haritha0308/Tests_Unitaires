@@ -11,6 +11,12 @@ import org.junit.jupiter.api.Test;
 import main.VecteurTest;
 
 public class VecteurTest {
+	
+	/**
+	 * Instanciation de 3 vecteurs pour réaliser les tests
+	 * Un sous forme de string
+	 * Deux sous forme d'entier
+	 */
     Vector<Object> stringVector = new Vector<Object>() {
         private static final long serialVersionUID = 1L;
 
@@ -41,6 +47,12 @@ public class VecteurTest {
     
     
     @Test
+    /**
+     * Test pour l'usage de la méthode unionSet fonctionne
+     * et si on ne rencontre pas d'exceptions
+     * Pour cela, on dit que l'on peut avoir un résultat, lorsqu'il n'y a pas d'exception
+     * avec l'usage de la méthode unionSet sur les 3 vecteurs
+     */
     public void fusionTestOk() {
         Vector <Object> result;
         result = assertDoesNotThrow(() -> Vecteur.unionSet(intVector, intVector1));
@@ -48,6 +60,13 @@ public class VecteurTest {
     }
 
     @Test
+    /**
+     * Test pour savoir si les paramètres des vecteurs ont une taille 
+     * supérieur à 0
+     * Pour cela, on utilise deux vecteurs vides
+     * Ainsi, on fait ressortir une erreur que l'on va comparer avec celle
+     * présente sur la méthode
+     */
     public void fusionTestPasParametres() {
         Exception thrown = assertThrows(
             Exception.class,
