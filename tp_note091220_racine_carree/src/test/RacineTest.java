@@ -1,6 +1,8 @@
 package test;
-
+import static java.time.Duration.ofMillis;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
@@ -34,9 +36,11 @@ public class RacineTest {
 	@Test
 	@DisplayName("Value A > Value B => Exception")
 	public void testParametersException(){
-		assertThrows(Exception.class,()->{
-			racine.allSqrt(5, 3);
-		},"B must be high than A");
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(5, 3), "B must be high than A");
+		
+		
+	    assertEquals("B must be high than A", e.getMessage());
 	}
 	
 	/**
@@ -45,9 +49,10 @@ public class RacineTest {
 	@Test
 	@DisplayName("Value A = Value B => Exception")
 	public void testEqualParametersException(){
-		assertThrows(Exception.class,()->{
-			racine.allSqrt(5, 5);
-		},"B must be high than A");
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(5, 5), "B must be high than A");
+		
+		assertEquals("B must be high than A", e.getMessage());
 	}
 	
 	/**
@@ -55,10 +60,36 @@ public class RacineTest {
 	 */
 	@Test
 	@DisplayName("Value A < 0 && Value B < 0 => Exception")
-	public void testNagativeParametersException(){
-		assertThrows(Exception.class,()->{
-			racine.allSqrt(-2, -2);
-		},"Values must be superior at 0");
+	public void testNegativeParametersException(){
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(-2, -3), "Values must be superior at 0");
+		
+		assertEquals("Values must be superior at 0", e.getMessage());
+	}
+	
+	/**
+	 * Quand a<0 et b=0, on doit avoir une exception
+	 */
+	@Test
+	@DisplayName("Value A < 0 && Value B = 0 => Exception")
+	public void testNegativeNullParametersException(){
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(-2, 0), "Values must be superior at 0");
+		
+		assertEquals("Values must be superior at 0", e.getMessage());
+	}
+	
+	
+	/**
+	 * Quand a<0 et b>0, on doit avoir une exception
+	 */
+	@Test
+	@DisplayName("Value A < 0 && Value B > 0 => Exception")
+	public void testNegativePositiveParametersException(){
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(-2, 10), "Values must be superior at 0");
+		
+		assertEquals("Values must be superior at 0", e.getMessage());
 	}
 	
 	/**
@@ -67,9 +98,10 @@ public class RacineTest {
 	@Test
 	@DisplayName("Value A = 0 && Value B = 0 => Exception")
 	public void testNullParametersException(){
-		assertThrows(Exception.class,()->{
-			racine.allSqrt(0, 0);
-		},"Values must be superior at 0");
+		Exception e = assertThrows(Exception.class,()->
+			racine.allSqrt(0, 0),"Values must be superior at 0");
+		
+		assertEquals("Values must be superior at 0", e.getMessage());
 	}
 	
 	/**
@@ -92,4 +124,14 @@ public class RacineTest {
 		
 		assertTrue(racineExpected.equals(racineTest));
 	}
+	
+	@Test
+    public void performanceTestShort() {
+        assertTimeout(ofMillis(5), () -> racine.allSqrt(1, 30));
+    }
+
+    @Test
+    public void performanceTestLong() {
+        assertTimeout(ofMillis(2000), () -> racine.allSqrt(1, 9000000));
+    }
 }

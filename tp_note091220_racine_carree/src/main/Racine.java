@@ -5,6 +5,9 @@ import java.util.HashMap;
 public class Racine {
 	/**
 	 * Calcul des racines carrés compris entre deux nombres entiers
+	 * @author Jennifer CALIANASSOUNDARAM && Jean-Baptiste DA COSTA
+	 * @author github.com/Haritha0308/Tests_Unitaires/
+	 * @version 1.0
 	 * @param a premier nombre entier
 	 * @param b second nombre entier
 	 * @return dictionnaire avec les nombres et leur racine
